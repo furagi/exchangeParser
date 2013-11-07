@@ -18,10 +18,10 @@ class EuropeanCB extends Parser
 		
 		cur = {}
 		currencys = {}
-
+		
 		parseString data, {async: on}, (err, result) =>
 			if err
-				@emit 'error', err
+				@_onParseError err
 				return
 			
 			data = result['gesmes:Envelope'].Cube[0].Cube[0].Cube

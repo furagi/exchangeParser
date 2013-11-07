@@ -20,16 +20,22 @@ class OpenExchange extends Parser
 			
 		
 
-		
+
+
+
 	_parse: (data) ->
+		if not data?
+			@_onParseError 'Can\'t get from openexchange.org' 
+			return
+
 		try
 			data = JSON.parse data
 		catch e
-			@emit 'error', e
+			@_onParseError e
 			return
 
 		if data.error
-			@emit 'error', data.description
+			@_onParseError data.description
 			return
 
 		b = data.base

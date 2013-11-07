@@ -6,7 +6,6 @@ RatesController = require(__dirname + '/app/controllers/ratescontroller').RatesC
 OpenExchange = require(__dirname + '/app/models/openexchange').OpenExchange
 AppSpot = require(__dirname +  '/app/models/appspot').AppSpot
 EuropeanCB = require(__dirname +  '/app/models/ecb').EuropeanCB
-ForbiddenController = require(__dirname + '/app/controllers/forbidden').ForbiddenController
 
 
 

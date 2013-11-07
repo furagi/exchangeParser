@@ -9,7 +9,10 @@ class Parser extends EventEmitter
 	#base - base currency, currencys - array of identificators. Ex.: getRate 'EUR', ['AUD', 'NOK', 'USD']
 	getRates: (base, currencys) ->  
 		
-	
+	_onGetDataError: (err) ->
+		@emit 'error', err
+		@_parse null
+
 	_getData: (url) ->
 		try
 			@_get url, (res) =>
@@ -19,14 +22,18 @@ class Parser extends EventEmitter
 				res.on 'data', (chunk) =>
 					body += chunk
 			.on 'error', (e) =>
-				@emit 'error', e.message
+				@_onGetDataError e.message
 		catch err
-			@emit 'error', err
-
+			@_onGetDataError err
 
 	_parse: (data) ->
 		# ...
 	
+
+	_onParseError: (err) ->
+		@emit 'error', err
+		cur = {}
+		@emit 'end', cur
 
 	
 exports.Parser = Parser
