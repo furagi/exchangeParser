@@ -25,6 +25,10 @@
     EuropeanCB.prototype._parse = function(data) {
       var cur, currencys, parseString,
         _this = this;
+      if (data == null) {
+        this._onParseError('Can\'t get from ecb.int');
+        return;
+      }
       parseString = require('xml2js').parseString;
       cur = {};
       currencys = {};

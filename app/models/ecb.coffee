@@ -14,11 +14,16 @@ class EuropeanCB extends Parser
 
 		
 	_parse: (data) ->
+		if not data?
+			@_onParseError 'Can\'t get from ecb.int' 
+			return
+
+
 		{parseString} = require 'xml2js'
 		
 		cur = {}
 		currencys = {}
-		
+
 		parseString data, {async: on}, (err, result) =>
 			if err
 				@_onParseError err
