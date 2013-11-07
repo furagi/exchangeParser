@@ -49,7 +49,8 @@ sbuildServer = (callback) ->
     print data.toString()
   coffee.on 'exit', (code) ->
     callback?() if code is 0
-    
+
+
 task 'sbuild', 'Build app', ->
   sbuildFrontend()
   sbuildControllers()

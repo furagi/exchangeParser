@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<head>
+		<link href="css/rates.css" rel="stylesheet">
+		<script src="js/ratesctrl.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+		<title>Exchange Indexer</title>
+	</head>
+	<body ng-app>
+		<div ng-controller="RatesCtrl">
+			<h1>
+				This page performs gathering of exchange rates from {{getSourcesList()}}
+			</h1>
+			<table class="rates-table">
+				<tr>
+					<td>{{base}}</td>
+					<td ng-repeat="source in sources">{{source}}</td>
+				</tr>
+				<tr ng-repeat="(currency, rates) in ratesCollection">
+					<td>{{currency}}</td>
+					<td ng-repeat="source in sources">{{rates[source]}}</td>
+				</tr>
+			</table>
+			<span class="error-{{error}}">
+				Error! Please, copy text below, and send it to furagi.usagi@gmail.com. Thanks.
+				<p>{{errorMsg}}</p>
+			</span>
+		</div>		
+	</body>
+</html>

@@ -41,7 +41,7 @@ class OpenExchange extends Parser
 
 		cur = {}
 		for i in [0...@_currencys.length]
-			cur[@_currencys[i]] = data.rates[@_currencys[i]] / cost
+			cur[@_currencys[i]] = Math.round( data.rates[@_currencys[i]] / cost * 10000) / 10000
 
 		@emit 'end', cur
 		

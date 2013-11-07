@@ -1,1 +1,15 @@
-http://openexchangerates.org/api/latest.json?app_id=499ff87d058c4470ad9da91b4477b5a8 
+{
+	"port": 8080,
+	"sources": {
+		"openexchangerates.org": {
+			"key": "499ff87d058c4470ad9da91b4477b5a8"
+		},
+		
+		"appspot.com": {
+			"key": "05a9ff8fad66f5a6f6a87df95e8b97396dba7160" 
+		},
+
+		"ecb.int": {
+		}
+	}
+}
