@@ -1,7 +1,6 @@
 express = require 'express'
 fs = require 'fs'
-
-
+path = require 'path'
 
 RatesController = require(__dirname + '/app/controllers/ratescontroller').RatesController
 OpenExchange = require(__dirname + '/app/models/openexchange').OpenExchange
@@ -15,7 +14,7 @@ app = express()
 app.use express.logger('dev')
 app.use express.bodyParser()
 app.use app.router
-app.use(express.static(__dirname, 'public'))
+app.use(express.static(path.join __dirname, 'public'))
 
 
 fs.readFile __dirname + '/config.json',  (err, data) =>

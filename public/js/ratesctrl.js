@@ -4,7 +4,7 @@
     function RatesCtrl($scope, $http) {
       var apiUrl, currencys, interval;
       $scope.base = 'EUR';
-      interval = 10000;
+      interval = 20000;
       apiUrl = '/api/rates';
       currencys = ['AUD', 'NOK', 'USD'];
       $scope.sources = ['loading...'];
