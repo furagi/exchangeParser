@@ -36,6 +36,10 @@
     AppSpot.prototype._parse = function(data) {
       var e;
       this._curLength--;
+      if (data == null) {
+        this._onParseError('Can\'t get from appspot.com');
+        return;
+      }
       try {
         data = JSON.parse(data);
       } catch (_error) {

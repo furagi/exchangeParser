@@ -21,6 +21,9 @@ class AppSpot extends Parser
 
 	_parse: (data) ->
 		@_curLength--
+		if not data?
+			@_onParseError 'Can\'t get from appspot.com' 
+			return
 		try
 			data = JSON.parse data
 		catch e
