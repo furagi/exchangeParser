@@ -1,5 +1,4 @@
 Parser = require(__dirname + '/parser').Parser
-# /api/latest.json?app_id=499ff87d058c4470ad9da91b4477b5a8
 class OpenExchange extends Parser
 	constructor: ->
 		@getRates = @getLatest

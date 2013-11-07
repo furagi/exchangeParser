@@ -1,5 +1,3 @@
-#05a9ff8fad66f5a6f6a87df95e8b97396dba7160
-#http://currency-api.appspot.com/api/{source}/{target}.json?key={key}
 Parser = require(__dirname + '/parser').Parser
 
 
