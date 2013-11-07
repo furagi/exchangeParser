@@ -1,7 +1,7 @@
 class RatesCtrl
 	constructor: ($scope, $http) ->
 		$scope.base = 'EUR'
-		interval = 10000
+		interval = 20000
 		apiUrl = '/api/rates'
 		currencys = ['AUD', 'NOK', 'USD']
 
