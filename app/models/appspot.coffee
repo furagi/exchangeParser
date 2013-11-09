@@ -7,36 +7,35 @@ class AppSpot extends Parser
 	getRates: (base, currencys, key) ->
 		url = 'http://currency-api.appspot.com/api/'
 		@_curLength = currencys.length
-		@_cur = {}
+		@_ratesInfo.rates = {}
 
 		for i in [0...currencys.length]
 			@_getData url + base + "/#{currencys[i]}.json?key=" + key
 
 			
 		
-	_onParseError: (msg) ->
-		@emit 'error', msg
+	_onError: (err) ->
+		@_ratesInfo.error = on
+		@_ratesInfo.descriptions.push err
 		if not @_curLength
-			@emit 'end', @_cur
+			@emit 'end', @_ratesInfo
 
 	_parse: (data) ->
 		@_curLength--
-		if not data?
-			@_onParseError 'Can\'t get from appspot.com' 
-			return
+
 		try
 			data = JSON.parse data
 		catch e
-			@_onParseError e
+			@_onError e
 			return
 		
 		if not data.success
-			@_onParseError data.message 
+			@_onError data.message 
 			return
 
-		@_cur[data.target] = data.rate
+		@_ratesInfo.rates[data.target] = data.rate
 		if not @_curLength
-			@emit 'end', @_cur
+			@emit 'end', @_ratesInfo
 		
 
 

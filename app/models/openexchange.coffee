@@ -1,18 +1,14 @@
 Parser = require(__dirname + '/parser').Parser
 class OpenExchange extends Parser
-	constructor: ->
+	_init: ->
 		@getRates = @getLatest
 
 	getLatest: (base, currencys, key, https = false) ->
 		url = "http#{if https then 's' else ''}://openexchangerates.org/api/"
 		
-		protocol = undefined
 		if https
-			protocol = require 'https'
-		else
-			protocol = require 'http'
-		@_get = protocol.get
-
+			@_get = (require 'https').get
+		
 		@_base = base
 		@_currencys = currencys
 
@@ -24,18 +20,14 @@ class OpenExchange extends Parser
 
 
 	_parse: (data) ->
-		if not data?
-			@_onParseError 'Can\'t get from openexchange.org' 
-			return
-
 		try
 			data = JSON.parse data
 		catch e
-			@_onParseError e
+			@_onError e
 			return
 
 		if data.error
-			@_onParseError data.description
+			@_onError data.description
 			return
 
 		b = data.base
@@ -44,11 +36,11 @@ class OpenExchange extends Parser
 			cost = data.rates[@_base]
 			data.rates[b] = 1
 
-		cur = {}
+		@_ratesInfo.rates = {}
 		for i in [0...@_currencys.length]
-			cur[@_currencys[i]] = Math.round( data.rates[@_currencys[i]] / cost * 10000) / 10000
+			@_ratesInfo.rates[@_currencys[i]] = Math.round( data.rates[@_currencys[i]] / cost * 10000) / 10000
 
-		@emit 'end', cur
+		@emit 'end', @_ratesInfo
 		
 
 

@@ -1,7 +1,7 @@
 Parser = require(__dirname + '/parser').Parser
 
 class EuropeanCB extends Parser
-
+		 
 	getRates: (base, currencys) ->
 		url = 'http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml'
 		
@@ -14,22 +14,17 @@ class EuropeanCB extends Parser
 
 		
 	_parse: (data) ->
-		if not data?
-			@_onParseError 'Can\'t get from ecb.int' 
-			return
-
-
 		{parseString} = require 'xml2js'
 		
-		cur = {}
-		currencys = {}
 
 		parseString data, {async: on}, (err, result) =>
 			if err
-				@_onParseError err
+				@_onError err
 				return
 			
 			data = result['gesmes:Envelope'].Cube[0].Cube[0].Cube
+			currencys = {}
+
 			for i in [0...data.length]
 				currencys[data[i]['$'].currency] = data[i]['$'].rate
 			
@@ -37,10 +32,12 @@ class EuropeanCB extends Parser
 			if currencys[@_base]
 				cost = currencys[@_base]
 
+			@_ratesInfo.rates = {}
+		
 			for i in [0...@_currencys.length]
-				cur[@_currencys[i]] = currencys[@_currencys[i]] / cost
+				@_ratesInfo.rates[@_currencys[i]] = currencys[@_currencys[i]] / cost
 
-			@emit 'end', cur			
+			@emit 'end', @_ratesInfo			
 		
 
 
